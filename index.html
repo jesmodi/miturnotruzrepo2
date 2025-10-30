@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Turno Truz</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="LOGO.png" type="image/png">
+  <meta name="theme-color" content="#1976d2">
+</head>
+<body>
+  <div class="container">
+    <img src="LOGO.png" alt="Logo Mi Turno" class="logo">
+
+    <h1>MI TURNO TRUZ</h1>
+
+    <div class="form">
+      <label for="driverId">Número de Conductor</label>
+      <input type="number" id="driverId" placeholder="Introduce tu número">
+
+      <div id="driverName" class="driver-name"></div>
+
+      <label for="dateSelect">Selecciona fecha</label>
+      <input type="date" id="dateSelect">
+
+      <button id="searchBtn">Consultar turno</button>
+    </div>
+
+    <div id="result" class="result"></div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/service-worker.js");
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
