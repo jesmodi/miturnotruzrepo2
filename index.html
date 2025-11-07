@@ -3,46 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Turno Truz</title>
+  <title>MI TURNO TRUZ</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="LOGO.png" type="image/png">
-  <meta name="theme-color" content="#1976d2">
 </head>
 <body>
-  <div class="container">
-    <img src="LOGO.png" alt="Logo Mi Turno" class="logo">
-
+  <header>
+    <img src="LOGO.png" alt="Logo MI TURNO TRUZ">
     <h1>MI TURNO TRUZ</h1>
+  </header>
 
-    <div class="form">
-      <label for="driverId">Número de Conductor</label>
-      <input type="number" id="driverId" placeholder="Introduce tu número">
+  <main>
+    <label for="driverId">Número de Conductor</label>
+    <input type="number" id="driverId" placeholder="Ejemplo: 452">
 
-      <div id="driverName" class="driver-name"></div>
+    <label for="dateSelect">Selecciona la Fecha</label>
+    <input type="date" id="dateSelect">
 
-      <label for="dateSelect">Selecciona fecha</label>
-      <input type="date" id="dateSelect">
+    <button id="searchBtn">Consultar Turno</button>
 
-      <button id="searchBtn">Consultar turno</button>
+    <div id="result"></div>
+
+    <hr>
+
+    <button id="testGoogleBtn">🔐 Test Google (OAuth2)</button>
+
+    <div class="links-legales">
+    <a href="privacy.html" target="_blank">Política de Privacidad</a> |
+    <a href="terms.html" target="_blank">Términos y Condiciones</a>
     </div>
 
-    <div id="result" class="result"></div>
-  </div>
+    <div class="privacy-section">
+      <a href="#" id="privacyLink" class="privacy-link" target="_blank">
+        📄 Política de Privacidad
+      </a>
+    </div>
+  </main>
 
   <script src="script.js"></script>
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/service-worker.js");
-    }
-  </script>
 </body>
 </html>
-
-
-
-
-
-
-
 

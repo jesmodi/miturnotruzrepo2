@@ -1,23 +1,37 @@
 {
-  "name": "Mi Turno",
-  "short_name": "Turno",
+  "name": "Mi Turno Truz",
+  "short_name": "MiTurno",
+  "description": "Consulta tu turno de trabajo TRUZ de forma rápida y segura.",
+  "lang": "es-ES",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#1976d2",
+  "orientation": "portrait",
+  "theme_color": "#006b4f",
+  "background_color": "#fdf7e8",
   "icons": [
-    {
-      "src": "/LOGO.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
     {
       "src": "/LOGO.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "/LOGO.png",
+      "sizes": "192x192",
+      "type": "image/png"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "/fondo.png",
+      "sizes": "1080x1920",
+      "type": "image/png"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
 }
+
 
 
 

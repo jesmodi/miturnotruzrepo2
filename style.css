@@ -1,46 +1,201 @@
-/* ====== Bloques de servicio ====== */
-.servicio {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(0, 255, 102, 0.4);
+/* === MI TURNO TRUZ === */
+/* Diseño limpio, profesional y adaptable */
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background: url("fondo.png") no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Capa translúcida para mejorar la legibilidad sobre el fondo */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(2px);
+  z-index: -1;
+}
+
+header {
+  text-align: center;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+header img {
+  width: 120px;
+  height: auto;
   border-radius: 12px;
-  padding: 15px;
-  margin-bottom: 15px;
-  text-align: left;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
 }
 
-.servicio h3 {
-  margin-top: 0;
-  color: #00ff66;
-  font-size: 1.1em;
+header h1 {
+  color: #1976d2;
+  margin: 0.5rem 0 0 0;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.15);
 }
 
-/* Mostrar el texto del servicio con formato legible */
-.servicio pre {
-  background: rgba(0, 0, 0, 0.6);
-  padding: 10px;
-  border-radius: 8px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  color: #fff;
-  font-size: 0.9em;
+main {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 2rem;
+  margin-top: 2rem;
+  backdrop-filter: blur(4px);
 }
 
-/* ====== Enlaces de descarga ====== */
-.servicio a {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 8px 12px;
-  background: #00b894;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
+label {
+  display: block;
   font-weight: bold;
-  transition: background 0.3s;
+  margin-bottom: 0.5rem;
+  color: #1976d2;
 }
 
-.servicio a:hover {
-  background: #009874;
+input[type="number"],
+input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
 }
+
+button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-block;
+  margin: 4px 2px;
+}
+
+button:hover {
+  background-color: #125cb0;
+}
+
+#result {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #f0f4ff;
+  border-radius: 10px;
+  border: 1px solid #d0defa;
+  text-align: center;
+}
+
+#result h3 {
+  margin-top: 0;
+  color: #1976d2;
+}
+
+#result img {
+  margin-top: 1rem;
+  max-width: 95%;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+hr {
+  margin: 2rem 0 1rem 0;
+  border: 0;
+  border-top: 1px solid #ddd;
+}
+
+/* 🔹 Enlace destacado a la política de privacidad */
+.privacy-section {
+  text-align: center;
+  margin-top: 1.2rem;
+}
+
+.privacy-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #e8f0fe;
+  color: #1976d2;
+  border: 1px solid #c5dafc;
+  border-radius: 8px;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.privacy-link:hover {
+  background: #d8e8ff;
+  transform: scale(1.03);
+}
+
+/* Adaptación móvil */
+@media (max-width: 600px) {
+  main {
+    margin-top: 1rem;
+    padding: 1.2rem;
+  }
+
+  header img {
+    width: 90px;
+  }
+
+  header h1 {
+    font-size: 1.4rem;
+  }
+}
+/* === Estilos adicionales para botón OAuth2 y enlaces legales === */
+
+.google-btn {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.google-btn:hover {
+  background-color: #145ca8;
+}
+
+.links-legales {
+  margin-top: 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.links-legales a {
+  color: #004a99;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.links-legales a:hover {
+  text-decoration: underline;
+}
+
 
 
 

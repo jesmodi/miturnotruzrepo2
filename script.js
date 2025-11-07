@@ -1,52 +1,86 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbynRxJFwlXtx6a9ofJRNRg-v9zBsyY1EK9bn7Q6QLNLVupMxk-wF5Dli7Purrsf3Nwk/exec";
+// ✅ URL del WebApp desplegado (Apps Script)
+const API_URL = "https://script.google.com/macros/s/AKfycbx_0RCkDoE29V7TvHSPDzUSHpxOThSpoH92LAzNXestFZ8V0T8aaI_v_v58rh0Ndj4/exec";
 
-document.getElementById("searchBtn").addEventListener("click", async () => {
-  const driverId = document.getElementById("driverId").value.trim();
-  const date = document.getElementById("dateSelect").value;
+// Esperar a que cargue el DOM antes de añadir listeners
+document.addEventListener("DOMContentLoaded", () => {
 
-  if (!driverId || !date) {
-    alert("Por favor introduce tu número de conductor y selecciona una fecha");
-    return;
-  }
-
+  const driverInput = document.getElementById("driverId");
+  const dateInput = document.getElementById("dateSelect");
   const resultDiv = document.getElementById("result");
-  resultDiv.innerHTML = "Buscando...";
+  const searchBtn = document.getElementById("searchBtn");
+  const testGoogleBtn = document.getElementById("testGoogleBtn");
+  const privacyLink = document.getElementById("privacyLink");
 
-  try {
-    const response = await fetch(`${API_URL}?driver_id=${driverId}&fecha=${date}`);
-    const data = await response.json();
+  // --- BOTÓN PRINCIPAL DE CONSULTA ---
+  searchBtn.addEventListener("click", async () => {
+    const driverId = driverInput.value.trim();
+    const date = dateInput.value;
 
-    if (data.error) {
-      resultDiv.innerHTML = `<p style="color:red;">${data.error}</p>`;
+    if (!driverId || !date) {
+      alert("⚠️ Por favor, introduce tu número de conductor y selecciona una fecha.");
       return;
     }
 
-    // Mostrar nombre del conductor
-    document.getElementById("driverName").innerText = `Conductor: ${data.nombre}`;
+    resultDiv.innerHTML = "<p>🔎 Buscando turno...</p>";
 
-    // Construir HTML de resultados
-    let html = "";
+    try {
+      const response = await fetch(`${API_URL}?action=turno&numero=${encodeURIComponent(driverId)}&fecha=${encodeURIComponent(date)}`, {
+        method: "GET",
+        headers: { "Cache-Control": "no-cache" },
+        mode: "cors"
+      });
 
-    if (data.servicios && data.servicios.length) {
-      data.servicios.forEach(s => {
+      // Si la respuesta no es 200 OK
+      if (!response.ok) {
+        throw new Error(`Error HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.error) {
+        resultDiv.innerHTML = `<p style="color:red;">❌ ${data.error}</p>`;
+        return;
+      }
+
+      // Mostrar resultados
+      let html = `
+        <h3>🧑‍✈️ Conductor: ${data.conductor || driverId}</h3>
+        <p><b>Fecha:</b> ${data.fecha || date}</p>
+        <p><b>Tipo de día:</b> ${data.tipo || "No especificado"}</p>
+        <p><b>Servicio:</b> ${data.servicio || "Sin datos"}</p>
+      `;
+
+      // Imagen generada por Gemini (si existe)
+      if (data.imagen) {
         html += `
-          <div class="servicio">
-            <h3>Servicio del ${s.fecha}</h3>
-            <pre>${s.servicio || "No disponible"}</pre>
-            ${s.desglose_url ? `<a href="${s.desglose_url}" target="_blank">📄 Descargar Desglose</a><br>` : ""}
-            ${s.cuadrante_url ? `<a href="${s.cuadrante_url}" target="_blank">📄 Descargar Cuadrante</a>` : ""}
+          <div style="margin-top:15px;">
+            <img src="${data.imagen}" alt="Turno generado"
+                 style="max-width:90%;border:1px solid #ccc;border-radius:10px;
+                 box-shadow:0 0 6px rgba(0,0,0,0.1);">
           </div>
         `;
-      });
-    } else {
-      html = "<p>No hay servicios para esa fecha.</p>";
+      }
+
+      resultDiv.innerHTML = html;
+
+    } catch (err) {
+      console.error("Error:", err);
+      resultDiv.innerHTML = `<p style="color:red;">❌ Error de conexión con el servidor.<br>${err.message}</p>`;
     }
+  });
 
-    resultDiv.innerHTML = html;
+  // --- BOTÓN DE AUTORIZACIÓN GOOGLE (OAuth2) ---
+  testGoogleBtn.addEventListener("click", () => {
+    const oauthUrl = `${API_URL}?action=auth`;
+    window.open(oauthUrl, "_blank", "width=600,height=700");
+  });
 
-  } catch (err) {
-    resultDiv.innerHTML = `<p style="color:red;">Error de conexión</p>`;
-  }
+  // --- ENLACE DE POLÍTICA DE PRIVACIDAD ---
+  privacyLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.open("privacy.html", "_blank");
+  });
+
 });
 
 
