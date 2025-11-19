@@ -23,12 +23,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     resultDiv.innerHTML = "<p>🔎 Buscando turno...</p>";
 
-    try {
+    try { /*
       const response = await fetch(`${API_URL}?action=turno&numero=${encodeURIComponent(driverId)}&fecha=${encodeURIComponent(date)}`, {
         method: "GET",
         headers: { "Cache-Control": "no-cache" },
         mode: "cors"
-      });
+      });*/
+
+      // añadimos nuevo bloque si hay cambios se elimina
+      const response = await fetch(
+      `${API_URL}?action=turno&numero=${encodeURIComponent(driverId)}&fecha=${encodeURIComponent(date)}`
+      );
 
       // Si la respuesta no es 200 OK
       if (!response.ok) {
@@ -82,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
 
 
 
