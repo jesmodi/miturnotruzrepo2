@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       // ✅ Petición GET con parámetros
-      const url = `${API_URL}?action=turno&numero=${encodeURIComponent(driverId)}&fecha=${encodeURIComponent(date)}`;
+      const url = ${API_URL}?page=consulta_turno&numero=${encodeURIComponent(driverId)}&fecha=${encodeURIComponent(date)};
       const response = await fetch(url, {
         method: "GET",
         headers: { "Cache-Control": "no-cache" },
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- BOTÓN DE AUTORIZACIÓN GOOGLE (OAuth2) ---
   testGoogleBtn.addEventListener("click", () => {
-    const oauthUrl = `${API_URL}?action=auth`;
+    const oauthUrl = ${API_URL}?page=auth;
     window.open(oauthUrl, "_blank", "width=600,height=700");
   });
 
