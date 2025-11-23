@@ -1,0 +1,138 @@
+
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mi TURNO — Login</title>
+  <style>
+    :root{
+      --bg:#f3eedd;
+      --accent:#2f9a4a;
+      --muted:#8a8a8a;
+      --input-bg:#ffffffcc;
+      font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+    }
+    html,body{height:100%;margin:0}
+    body{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:var(--bg);
+    }
+    .container{
+      width:100%;
+      max-width:420px;
+      padding:28px;
+      border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.82));
+      box-shadow:0 8px 30px rgba(18,30,50,0.08);
+      text-align:center;
+      position:relative;
+    }
+    .hero{ margin-bottom:14px; position:relative; height:120px; display:flex; align-items:center; justify-content:center; flex-direction:column; }
+    .logo-bg{ position:absolute; inset:0; background-repeat:no-repeat; background-position:center top; background-size:220px auto; filter:opacity(0.95); pointer-events:none; }
+    .brand{ z-index:2; margin-top:70px; }
+    .brand h1{ margin:8px 0 0; color:var(--accent); font-size:28px; }
+    .brand p{ margin:0; color:var(--muted); font-size:13px; }
+    form{ margin-top:14px; text-align:left; }
+    label{ display:block; font-size:13px; color:var(--muted); margin:10px 0 6px; }
+    input[type="text"], input[type="password"]{
+      width:100%; padding:12px 14px; border-radius:8px; border:1px solid #e6e6e6; background:var(--input-bg); box-sizing:border-box; font-size:15px; color:#222;
+    }
+    .controls{ margin-top:18px; display:flex; gap:10px; align-items:center; }
+    .btn{ background:var(--accent); color:#fff; padding:10px 14px; border-radius:8px; border:none; font-weight:600; cursor:pointer; flex:1; font-size:15px; }
+    .helper{ font-size:12px; color:var(--muted); text-align:center; margin-top:12px; }
+    .note{ margin-top:10px; font-size:12px; color:#6b6b6b; background:#ffffffcc; padding:8px; border-radius:8px; }
+  </style>
+</head>
+<body>
+  <div class="container" role="main" aria-labelledby="loginTitle">
+    <div class="hero" aria-hidden="true">
+      <div class="logo-bg" id="logoBg" aria-hidden="true"></div>
+      <div class="brand" id="loginTitle">
+        <h1>Mi TURNO</h1>
+        <p>Reservas y turnos — entorno de pruebas</p>
+      </div>
+    </div>
+
+    <form id="loginForm">
+      <label for="user">User</label>
+      <input id="user" name="user" type="text" value="tramtest" autocomplete="username" />
+
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" value="colaborador0" autocomplete="current-password" />
+
+      <div class="controls">
+        <button type="submit" id="submitBtn" class="btn">Login</button>
+      </div>
+
+      <div class="helper">Cuenta de prueba: <strong>tramtest</strong> / <strong>colaborador0</strong></div>
+
+      <div class="note">Para las pruebas de Verificación de OAuth: desactivar 2FA en esta cuenta y seguir el flujo de consentimiento cuando inicie sesión.</div>
+    </form>
+  </div>
+
+  <script>
+    // CONFIG: cambia esto por la URL pública de tu Web App (ej: https://script.google.com/macros/s/XXXX/exec)
+    const WEB_APP_URL = 'https://REPLACE_WITH_YOUR_WEBAPP_URL';
+
+    // Ruta raw en GitHub (ajusta si tu logo está en otra carpeta o rama)
+    const logoRawUrl = 'https://raw.githubusercontent.com/jesmodi/miturnotruzrepo2/main/assets/logo.png';
+
+    // Inyecta logo en background
+    (function setLogo(){
+      const el = document.getElementById('logoBg');
+      el.style.backgroundImage = `url('${logoRawUrl}')`;
+    })();
+
+    // Manejo del submit usando fetch
+    (function(){
+      const form = document.getElementById('loginForm');
+      const btn = document.getElementById('submitBtn');
+
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        const user = document.getElementById('user').value;
+        const password = document.getElementById('password').value;
+
+        btn.disabled = true;
+        btn.textContent = 'Comprobando...';
+
+        try {
+          const payload = { user: user, password: password };
+          const res = await fetch(WEB_APP_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (!res.ok) {
+            throw new Error('Network response was not ok: ' + res.status);
+          }
+
+          const data = await res.json();
+
+          if (data && data.ok) {
+            // Redirigir al callback OAuth para que el verificador continúe el flujo
+            if (data.redirect) {
+              window.location.href = data.redirect;
+            } else {
+              alert('Login exitoso. Procede al flujo OAuth.');
+            }
+          } else {
+            alert(data && data.message ? data.message : 'Credenciales incorrectas');
+          }
+        } catch (err) {
+          console.error('Fetch error:', err);
+          alert('Error de red o del servidor. Revisa el despliegue de Apps Script.');
+        } finally {
+          btn.disabled = false;
+          btn.textContent = 'Login';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

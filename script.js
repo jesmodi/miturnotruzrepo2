@@ -1,5 +1,5 @@
 // ✅ URL del WebApp desplegado (Apps Script)
-const API_URL = "https://script.google.com/macros/s/AKfycbxe6F2mcXhKzbMynZNCuXXaFNNZwFxNGyIo0Ku7Nn5R1q7CRbX9nPxsa5HVkYTpCsmz/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzJS_oBd7H1cl7QKVX4PD-idSCjaXXmJK-tED27732cOulC1ATZssNZ9fZo7b-Hdp8M/exec";
 
 // Esperar a que cargue el DOM antes de añadir listeners
 document.addEventListener("DOMContentLoaded", () => {
